@@ -18,11 +18,12 @@ userRoute.get("/",async(req,res)=>{
 
 
 //post
- userRoute.post("/new_user",async(req,res)=>{
+ userRoute.post("/",async(req,res)=>{
  try {
     const newUser=await UserModel.create(req.body)
     res.status(201).send({message:"User created successfully",data:newUser})
  } catch (error) {
+    console.log(error); 
     res.send({message:error})
  }
  })
