@@ -30,14 +30,15 @@ authorRoute.get("/",async(req,res)=>{
 
 //patch
 authorRoute.patch("/:_id", async (req,res) => {
-    let _id = req.params
-    console.log(_id,req.body)
+    let _id = req.params;
+    let data = req.body;
+    const existingAuthor = await AuthorModel.findById(_id)
     try {
         await AuthorModel.findByIdAndUpdate(_id,{
-            name : req.body.name,
-            nationality : req.body.nationality,
-            birth_year : req.body.birth_year,
-            books : req.body.books
+            name :  data.name? data.name : existingAuthor.name,
+            nationality : data.nationality? data.nationality : existingAuthor.nationality,
+            birth_year : data.birth_year? data.birth_year : existingAuthor.birth_year,
+            books : data.books? [...existingAuthor.books, ...data.books] : existingAuthor.books
         })
         const updatedAuthor = await AuthorModel.findById(_id)
         res.send({message:"Success", data:updatedAuthor})
