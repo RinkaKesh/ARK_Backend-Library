@@ -11,7 +11,10 @@ const bookSchema=new mongoose.Schema({
     published_year:{type:Number},
     genre:{type:String},
     author:{type:mongoose.Schema.Types.ObjectId,ref:"Author"}
-},{versionKey:false})
+},{
+    versionKey:false
+    // toJSON : { virtuals: true }
+})
 
 const BookModel=mongoose.model("Book",bookSchema)
 
